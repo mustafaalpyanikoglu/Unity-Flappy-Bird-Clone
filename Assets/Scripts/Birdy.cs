@@ -15,6 +15,7 @@ public class Birdy : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        rb2D.velocity = Vector2.up * velocity * 2;
     }
 
     void Update()
@@ -23,6 +24,11 @@ public class Birdy : MonoBehaviour
         {
             rb2D.velocity = Vector2.up * velocity;
         }
+        if(rb2D.transform.position.y > 1.2f)
+        {
+            deathAction();
+        }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,10 +42,15 @@ public class Birdy : MonoBehaviour
     {
         if(collision.gameObject.tag=="DeathArea")
         {
-            isDead = true;
-            Time.timeScale = 0;
-
-            DeathScreen.SetActive(true);
+            deathAction();
         }
+    }
+
+    private void deathAction()
+    {
+        isDead = true;
+        Time.timeScale = 0;
+
+        DeathScreen.SetActive(true);
     }
 }
